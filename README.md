@@ -45,20 +45,7 @@
 
 ---
 
-## ⚙️ Локальний запуск
-
-```bash
-# Клонування проєкту
-git clone https://github.com/xadeyll/TrafficLayer.git
-cd TrafficLayer
-
-# Запуск бекенду
-cd backend
-npm install
-npm run start
-
-# Запуск фронтенду
-cd ../frontend
-npm install
-npm run dev
-```
+### 📦 Як запустити:
+1. Клонувати репозиторій:
+   ```bash
+   git clone https://github.com/xadeyll/TrafficLayer.git
