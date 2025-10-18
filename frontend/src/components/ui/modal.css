@@ -1,0 +1,5 @@
+/* Traffic Analyzer — стилі прокрутки тіла модалки */
+.modal-body.scrollable {
+	max-height: 75vh;
+	overflow: auto;
+}
