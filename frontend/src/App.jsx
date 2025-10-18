@@ -345,7 +345,8 @@ async function sendSupportReport(payload) {
 }
 
 async function getTrafficAnalysis(city, signal) {
-	const { data } = await api.get(`/api/traffic/${city}`, { signal });
+	const API_BASE = import.meta.env.VITE_API_BASE || "";
+	const { data } = await api.get(`${API_BASE}/traffic/${city}`, { signal });
 	return data;
 }
 
