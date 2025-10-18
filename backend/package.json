@@ -1,25 +1,25 @@
 {
-	"name": "backend",
-	"version": "1.0.0",
-	"main": "index.js",
-	"type": "commonjs",
-	"description": "Traffic Analyzer API",
-	"scripts": {
-		"dev": "nodemon index.js",
-		"start": "node index.js",
-		"lint": "eslint .",
-		"format": "prettier . --write"
-	},
-	"dependencies": {
-		"axios": "^1.11.0",
-		"cors": "^2.8.5",
-		"dotenv": "^17.2.3",
-		"express": "^5.1.0"
-	},
-	"devDependencies": {
-		"@eslint/js": "^9.37.0",
-		"eslint": "^9.37.0",
-		"globals": "^16.4.0",
-		"nodemon": "^3.1.0"
-	}
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "description": "Traffic Analyzer API",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "lint": "eslint .",
+    "format": "prettier . --write"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.37.0",
+    "eslint": "^9.37.0",
+    "globals": "^16.4.0",
+    "nodemon": "^3.1.0"
+  }
 }
