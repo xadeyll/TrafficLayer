@@ -1,3 +1,14 @@
+<div align="center">
+
+![Status](https://img.shields.io/badge/status-stable-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Tech](https://img.shields.io/badge/stack-React%20%7C%20Node.js%20%7C%20API-orange)
+
+</div>
+
+🌐 **Демо:** [traffic-analyzer.netlify.app](https://traffic-analyzer.netlify.app)
+
+---
 # 🌍 Курсова робота — Карта трафіку
 
 **Проєкт:** Розробка веб-сервісу для аналізу даних про трафік у містах з візуалізацією на картах  
