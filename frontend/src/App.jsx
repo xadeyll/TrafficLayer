@@ -345,9 +345,14 @@ async function sendSupportReport(payload) {
 }
 
 async function getTrafficAnalysis(city, signal) {
-	const API_BASE = import.meta.env.VITE_API_BASE || "";
-	const { data } = await api.get(`${API_BASE}/traffic/${city}`, { signal });
-	return data;
+        const rawBase =
+                import.meta.env.VITE_API_BASE === undefined
+                        ? "/api"
+                        : import.meta.env.VITE_API_BASE;
+        const base = rawBase.replace(/\/$/, "");
+        const prefix = base ? base : "";
+        const { data } = await api.get(`${prefix}/traffic/${city}`, { signal });
+        return data;
 }
 
 const CACHE_TTL = 10 * 60 * 1000; // 10 хв
@@ -478,12 +483,13 @@ export default function App() {
 			setLoading(true);
 			setError("");
 			setAnalysis(null);
-			try {
-				const data = await getTrafficAnalysis(city, signal);
-				setAnalysis(data);
-			} catch (e) {
-				if (e?.name === "AbortError") return;
-				setError(e?.message || "Не вдалося отримати дані.");
+                        try {
+                                const data = await getTrafficAnalysis(city, signal);
+                                setAnalysis(data);
+                                setAnalysisDate(new Date());
+                        } catch (e) {
+                                if (e?.name === "AbortError") return;
+                                setError(e?.message || "Не вдалося отримати дані.");
 			} finally {
 				setLoading(false);
 			}
