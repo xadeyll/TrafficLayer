@@ -1,9 +1,7 @@
-// backend/eslint.config.cjs
 const js = require("@eslint/js");
 const globals = require("globals");
 
 module.exports = [
-	// що ігноруємо (замість .eslintignore)
 	{
 		ignores: ["**/node_modules/**", "**/logs/**", "**/dist/**", "**/build/**"],
 	},
@@ -12,9 +10,9 @@ module.exports = [
 		files: ["**/*.js"],
 		languageOptions: {
 			ecmaVersion: "latest",
-			sourceType: "commonjs", // ← ми на CommonJS у Node
+			sourceType: "commonjs",
 			globals: {
-				...globals.node, // ← дає require, module, __dirname, process
+				...globals.node,
 				...globals.es2021,
 			},
 		},

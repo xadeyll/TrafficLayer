@@ -1,4 +1,3 @@
-// frontend/eslint.config.cjs
 const js = require("@eslint/js");
 const globals = require("globals");
 const react = require("eslint-plugin-react");
@@ -20,10 +19,10 @@ module.exports = [
 			...js.configs.recommended.rules,
 			...react.configs.recommended.rules,
 			"react/react-in-jsx-scope": "off",
-			"react/prop-types": "off", // ⬅️ вимикаємо вимогу PropTypes
+			"react/prop-types": "off",
 			"no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
 			"no-console": "off",
-			"no-empty": ["warn", { allowEmptyCatch: true }], // ⬅️ дозволяємо порожні catch
+			"no-empty": ["warn", { allowEmptyCatch: true }],
 		},
 		settings: { react: { version: "detect" } },
 	},

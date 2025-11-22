@@ -4,6 +4,11 @@ import {
 	useJsApiLoader,
 } from "@react-google-maps/api";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+	getTrafficAnalysis,
+	getWeather,
+	sendSupportReport,
+} from "./api/traffic.api.js";
 import countries from "./components/data/countries.json";
 import "./components/styles/App.css";
 import Modal from "./components/ui/Modal.jsx";
@@ -312,89 +317,6 @@ function WeatherWidget({ weather, weatherError }) {
 			)}
 		</div>
 	);
-}
-
-const api = {
-	get: async (url, config = {}) => {
-		const u = new URL(url, window.location.origin);
-		if (config.params) {
-			Object.entries(config.params).forEach(([k, v]) =>
-				u.searchParams.set(k, v)
-			);
-		}
-		const res = await fetch(u.toString(), {
-			method: "GET",
-			signal: config.signal,
-			headers: { "Content-Type": "application/json" },
-		});
-		if (!res.ok) throw new Error(`HTTP ${res.status} — ${res.statusText}`);
-		return { data: await res.json() };
-	},
-	post: async (url, payload = {}) => {
-		const res = await fetch(url, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(payload),
-		});
-		if (!res.ok) throw new Error(`HTTP ${res.status} — ${res.statusText}`);
-		return { data: await res.json() };
-	},
-};
-async function sendSupportReport(payload) {
-	return await api.post(`/api/support/report`, payload);
-}
-
-async function getTrafficAnalysis(city, signal) {
-	const API_BASE = import.meta.env.VITE_API_BASE || "";
-	const { data } = await api.get(`${API_BASE}/traffic/${city}`, { signal });
-	return data;
-}
-
-const CACHE_TTL = 10 * 60 * 1000; // 10 хв
-
-async function getWeather(lat, lng, signal) {
-	const OPENWEATHER_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
-	if (!OPENWEATHER_KEY) throw new Error("NO_OPENWEATHER_KEY");
-
-	const key = `weather:${lat}:${lng}`;
-	const cached = sessionStorage.getItem(key);
-	if (cached) {
-		try {
-			const parsed = JSON.parse(cached);
-			if (Date.now() - parsed.ts < CACHE_TTL) return parsed.data;
-		} catch {}
-	}
-
-	const res = await fetch(
-		"https://api.openweathermap.org/data/2.5/forecast?" +
-			new URLSearchParams({
-				lat,
-				lon: lng,
-				units: "metric",
-				lang: "uk",
-				appid: OPENWEATHER_KEY,
-			}),
-		{ signal }
-	);
-	const json = await res.json();
-
-	const list = (json?.list ?? []).slice(0, 5).map((x) => ({
-		dt: x.dt,
-		time: new Date(x.dt * 1000).toLocaleTimeString("uk-UA", {
-			hour: "2-digit",
-			minute: "2-digit",
-		}),
-		temp: Math.round(x.main?.temp ?? 0),
-		wind: Math.round(x.wind?.speed ?? 0),
-		desc: x.weather?.[0]?.description ?? "",
-		icon: x.weather?.[0]?.icon ?? "01d",
-	}));
-
-	const data = { city: json?.city?.name, list };
-	try {
-		sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
-	} catch {}
-	return data;
 }
 
 function openMailClient(subject, body) {
@@ -762,8 +684,6 @@ ${supportText.trim()}`;
 							</a>
 						</div>
 					</div>
-
-					{/* ПРАВА КОЛОНКА */}
 					<nav className="waze-col">
 						<h4>Інформація</h4>
 						<ul>

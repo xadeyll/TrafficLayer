@@ -1,4 +1,3 @@
-# .editorconfig
 root = true
 
 [*]
@@ -7,25 +6,19 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-# За замовчуванням — таби (як у тебе зараз)
 indent_style = tab
-# tab_width впливає лише на відображення, не на файли
 tab_width = 2
 
-# JSON / YAML завжди з 2 пробілами (стандарти інструментів)
 [*.{json,yml,yaml}]
 indent_style = space
 indent_size = 2
 
-# Markdown: не зрізати пробіли в кінці рядка (вони інколи позначають перенос)
 [*.md]
 trim_trailing_whitespace = false
 
-# Makefile завжди з табами (вимога синтаксису)
 [Makefile]
 indent_style = tab
 
-# Git-ігнор/атрибути просто як текст
 [.{gitignore,gitattributes}]
 indent_style = space
 indent_size = 2

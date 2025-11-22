@@ -1,4 +1,3 @@
-// Traffic Analyzer — універсальна модалка з Esc, фокусом і фокус-трапом
 import { useEffect, useRef } from "react";
 import "./modal.css";
 

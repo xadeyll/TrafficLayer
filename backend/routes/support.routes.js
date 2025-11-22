@@ -1,8 +1,12 @@
-const fs = require("fs");
+// 1. Змінюємо імпорт fs, щоб використовувати promises API
+const fs = require("fs").promises;
 const path = require("path");
 const router = require("express").Router();
 
-router.post("/report", (req, res, next) => {
+// Робимо обробник роута асинхронним
+router.post("/report", async (req, res, next) => {
+	// ↑ Додали async
+
 	try {
 		const { message, ...meta } = req.body || {};
 		if (!message || !String(message).trim()) {
@@ -16,14 +20,19 @@ router.post("/report", (req, res, next) => {
 		};
 
 		const logsDir = path.join(__dirname, "..", "logs");
-		fs.mkdirSync(logsDir, { recursive: true });
-		fs.appendFileSync(
+
+		// 2. Використовуємо await fs.mkdir (асинхронно)
+		await fs.mkdir(logsDir, { recursive: true });
+
+		// 3. Використовуємо await fs.appendFile (асинхронно)
+		await fs.appendFile(
 			path.join(logsDir, "support-reports.jsonl"),
 			JSON.stringify(record) + "\n"
 		);
 
 		res.json({ ok: true });
 	} catch (e) {
+		// 4. Якщо виникла помилка, передаємо її далі
 		next(e);
 	}
 });

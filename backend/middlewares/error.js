@@ -15,7 +15,6 @@ module.exports = (err, req, res, next) => {
 		console.error("[ERROR]", err.message);
 	}
 
-	// fallback на 500, якщо не встановлено
 	if (!res.statusCode || res.statusCode < 400) res.status(status);
 
 	const payload = isDev
